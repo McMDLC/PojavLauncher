@@ -29,7 +29,7 @@ public class ControlData {
     public static final int SPECIALBTN_MOUSEMID = -6;
     public static final int SPECIALBTN_SCROLLUP = -7;
     public static final int SPECIALBTN_SCROLLDOWN = -8;
-    
+
     private static ControlData[] SPECIAL_BUTTONS;
     private static String[] SPECIAL_BUTTON_NAME_ARRAY;
 
@@ -53,29 +53,29 @@ public class ControlData {
      */
     public String dynamicX, dynamicY;
     public boolean isDynamicBtn, isToggle, passThruEnabled;
-    
-    public static ControlData[] getSpecialButtons(){
+
+    public static ControlData[] getSpecialButtons(android.content.Context ctx){
         if (SPECIAL_BUTTONS == null) {
             SPECIAL_BUTTONS = new ControlData[]{
-                new ControlData("Keyboard", new int[]{SPECIALBTN_KEYBOARD}, "${margin} * 3 + ${width} * 2", "${margin}", false),
-                new ControlData("GUI", new int[]{SPECIALBTN_TOGGLECTRL}, "${margin}", "${bottom} - ${margin}"),
-                new ControlData("PRI", new int[]{SPECIALBTN_MOUSEPRI}, "${margin}", "${screen_height} - ${margin} * 3 - ${height} * 3"),
-                new ControlData("SEC", new int[]{SPECIALBTN_MOUSESEC}, "${margin} * 3 + ${width} * 2", "${screen_height} - ${margin} * 3 - ${height} * 3"),
-                new ControlData("Mouse", new int[]{SPECIALBTN_VIRTUALMOUSE}, "${right}", "${margin}", false),
+                    new ControlData(ctx.getResources().getString(R.string.control_keyboard), new int[]{SPECIALBTN_KEYBOARD}, "${margin} * 3 + ${width} * 2", "${margin}", false),
+                    new ControlData(ctx.getResources().getString(R.string.control_toggle), new int[]{SPECIALBTN_TOGGLECTRL}, "${margin}", "${bottom} - ${margin}"),
+                    new ControlData(ctx.getResources().getString(R.string.control_primary), new int[]{SPECIALBTN_MOUSEPRI}, "${margin}", "${screen_height} - ${margin} * 3 - ${height} * 3"),
+                    new ControlData(ctx.getResources().getString(R.string.control_secondary), new int[]{SPECIALBTN_MOUSESEC}, "${margin} * 3 + ${width} * 2", "${screen_height} - ${margin} * 3 - ${height} * 3"),
+                    new ControlData(ctx.getResources().getString(R.string.control_mouse), new int[]{SPECIALBTN_VIRTUALMOUSE}, "${right}", "${margin}", false),
 
-                new ControlData("MID", new int[]{SPECIALBTN_MOUSEMID}, "${margin}", "${margin}"),
-                new ControlData("SCROLLUP", new int[]{SPECIALBTN_SCROLLUP}, "${margin}", "${margin}"),
-                new ControlData("SCROLLDOWN", new int[]{SPECIALBTN_SCROLLDOWN}, "${margin}", "${margin}")
+                    new ControlData("MID", new int[]{SPECIALBTN_MOUSEMID}, "${margin}", "${margin}"),
+                    new ControlData("SCROLLUP", new int[]{SPECIALBTN_SCROLLUP}, "${margin}", "${margin}"),
+                    new ControlData("SCROLLDOWN", new int[]{SPECIALBTN_SCROLLDOWN}, "${margin}", "${margin}")
             };
         }
 
         return SPECIAL_BUTTONS;
     }
 
-    public static String[] buildSpecialButtonArray() {
+    public static String[] buildSpecialButtonArray(android.content.Context ctx) {
         if (SPECIAL_BUTTON_NAME_ARRAY == null) {
             List<String> nameList = new ArrayList<String>();
-            for (ControlData btn : getSpecialButtons()) {
+            for (ControlData btn : getSpecialButtons(ctx)) {
                 nameList.add(btn.name);
             }
             SPECIAL_BUTTON_NAME_ARRAY = nameList.toArray(new String[0]);
@@ -173,18 +173,18 @@ public class ControlData {
                 controlData.cornerRadius
         );
     }
-    
+
     public void execute(boolean isDown) {
         for(int keycode : keycodes){
             sendKeyPress(keycode, 0, isDown);
         }
     }
 
-    
+
     public float insertDynamicPos(String dynamicPos) {
         // Insert value to ${variable}
         String insertedPos = JSONUtils.insertSingleJSONValue(dynamicPos, fillConversionMap());
-        
+
         // Calculate, because the dynamic position contains some math equations
         return calculate(insertedPos);
     }
@@ -300,3 +300,4 @@ public class ControlData {
     }
 
 }
+
