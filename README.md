@@ -1,12 +1,9 @@
 <H1 align="center">PojavLauncher</H1>
 
-<img src="https://github.com/CriticalRange/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
+<img src="https://github.com/asaldele1/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
-[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/PojavLauncherTeam/PojavLauncher)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
-[![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/6RpEJda) 
-[![Twitter Follow](https://img.shields.io/twitter/follow/plaunchteam?color=blue&style=flat-square)](https://twitter.com/PLaunchTeam)
+[![Android CI](https://github.com/asaldele1/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/asaldele1/PojavLauncher/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/asaldele1/PojavLauncher)](https://github.com/asaldele1/PojavLauncher/actions)
 ---------
 * From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!
 
@@ -14,7 +11,7 @@
 
 * It can run almost every version of the Minecraft, allowing you to use .jar only installers to install modloaders like [forge](https://files.minecraftforge.net/), [fabric](http://fabricmc.net/), [optifine](https://optifine.net); Utility and hack clients like [LabyMod](https://www.labymod.net/en), [Wurst](https://www.wurstclient.net/) and much more!
 
-* For more details [check out our wiki](https://github.com/PojavLauncherTeam/PojavLauncher/wiki)
+* For more details [check out our wiki](https://github.com/asaldele1/PojavLauncher/wiki)
 ## Some notes to start with
 - We do not exist on TikTok. No one from the dev team makes TikTok videos. 
 - The official Twitter for PojavLauncher is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake, please report them to Twitter's moderation team.
@@ -39,7 +36,7 @@
 
 Getting PojavLauncher is divided into 3 parts.
 
-1. You can get prebuilt app from [stable releases](https://github.com/PojavLauncherTeam/PojavLauncher/releases) or [automatic builds](https://github.com/PojavLauncherTeam/PojavLauncher/actions).
+1. You can get prebuilt app from [stable releases](https://github.com/asaldele1/PojavLauncher/releases) or [automatic builds](https://github.com/asaldele1/PojavLauncher/actions).
 
 2. You can get it from Google Play by clicking:
 [![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=net.kdt.pojavlaunch)
