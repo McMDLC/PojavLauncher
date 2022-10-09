@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">Catatan crash</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Terhubung</string>
-    <string name="mcl_account_local">Lokal</string>
+    <string name="mcl_account_offline">Offline</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Siap untuk bermain Minecraft %s</string>
     <string name="mcl_launch_cleancache">Membersihkan file cache</string>

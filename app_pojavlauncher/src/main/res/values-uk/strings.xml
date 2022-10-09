@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">Журнал збоїв</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Підключено</string>
-    <string name="mcl_account_local">Локальний</string>
+    <string name="mcl_account_offline">Офлайн</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s готовий до запуску</string>
     <string name="mcl_launch_cleancache">Очищення файлів кешу</string>

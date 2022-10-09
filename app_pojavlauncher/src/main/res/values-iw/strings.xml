@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">רשומת קריסה</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">מחובר</string>
-    <string name="mcl_account_local">מקומי</string>
+    <string name="mcl_account_offline">מקומי</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">מוכן להפעיל Minecraft %s</string>
     <string name="mcl_launch_cleancache">מנקה קבצי מטמון</string>

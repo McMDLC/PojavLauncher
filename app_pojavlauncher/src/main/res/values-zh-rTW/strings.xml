@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">崩潰日誌</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">已連接</string>
-    <string name="mcl_account_local">本地</string>
+    <string name="mcl_account_offline">本地</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s 就緒</string>
     <string name="mcl_launch_cleancache">正在清理快取</string>

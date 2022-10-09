@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">Çökme günlüğü</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Bağlandı</string>
-    <string name="mcl_account_local">Yerel</string>
+    <string name="mcl_account_offline">Çevrimdışı</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s başlamaya hazır</string>
     <string name="mcl_launch_cleancache">Önbellek dosyaları temizleniyor</string>

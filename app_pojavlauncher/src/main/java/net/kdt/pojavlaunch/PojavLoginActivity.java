@@ -81,7 +81,7 @@ public class PojavLoginActivity extends BaseActivity {
     
     private EditText edit2, edit3;
     private final int REQUEST_STORAGE_REQUEST_CODE = 1;
-    private CheckBox sRemember, sLocal;
+    private CheckBox sRemember, sOffline;
     private TextView startupTextView;
     private SharedPreferences firstLaunchPrefs;
     private MinecraftAccount mProfile = null;
@@ -232,8 +232,8 @@ public class PojavLoginActivity extends BaseActivity {
         edit2 = findViewById(R.id.login_edit_email);
         edit3 = findViewById(R.id.login_edit_password);
         sRemember = findViewById(R.id.login_switch_remember);
-        sLocal = findViewById(R.id.login_switch_local);
-        sLocal.setOnCheckedChangeListener((p1, p2) -> {
+        sOffline = findViewById(R.id.login_switch_offline);
+        sOffline.setOnCheckedChangeListener((p1, p2) -> {
             // May delete later
             edit3.setEnabled(!p2);
         });
@@ -634,7 +634,7 @@ public class PojavLoginActivity extends BaseActivity {
         accountDialog.show();
     }
     
-    private MinecraftAccount loginLocal() {
+    private MinecraftAccount loginOffline() {
         new File(Tools.DIR_ACCOUNT_OLD).mkdir();
         
         String text = edit2.getText().toString();
@@ -657,8 +657,8 @@ public class PojavLoginActivity extends BaseActivity {
 
     public void loginMC(final View v)
     {
-        if (sLocal.isChecked()) {
-            mProfile = loginLocal();
+        if (sOffline.isChecked()) {
+            mProfile = loginOffline();
             playProfile(false);
         } else {
             ProgressBar prb = findViewById(R.id.launcherAccProgress);
