@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">Nhật ký sự cố</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Đã kết nối</string>
-    <string name="mcl_account_local">Nội bộ</string>
+    <string name="mcl_account_offline">Ngoại tuyến</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Sẵn sàng để chơi Minecraft %s</string>
     <string name="mcl_launch_cleancache">Đang làm sạch bộ nhớ đệm</string>

@@ -210,4 +210,5 @@
     <string name="control_offset_title">Decalaj de control</string>
     <string name="profiles_profile_name">Nume</string>
     <string name="pedit_renderer">Randator</string>
+    <string name="mcl_account_offline">Deconectat</string>
 </resources>

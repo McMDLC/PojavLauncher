@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">Registro de errores</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Conectado</string>
-    <string name="mcl_account_local">Local</string>
+    <string name="mcl_account_offline">Desconectado</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Listo para jugar Minecraft %s</string>
     <string name="mcl_launch_cleancache">Limpiando archivos caché</string>

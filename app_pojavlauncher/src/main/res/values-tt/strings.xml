@@ -41,7 +41,7 @@
     <string name="mcl_tab_crash">Сафтан чыгарулар журналы</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">Тоташкан</string>
-    <string name="mcl_account_local">Локаль</string>
+    <string name="mcl_account_offline">Офлайн</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s кушылуга әзер</string>
     <string name="mcl_launch_cleancache">Кеш-файллар бетерүе</string>

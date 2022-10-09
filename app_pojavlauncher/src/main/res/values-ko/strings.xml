@@ -247,4 +247,5 @@
     <string name="pedit_java_runtime">자바 런타임</string>
     <string name="pedit_renderer">렌더러</string>
     <string name="migrated_profile_str">%s 버전 설정</string>
+    <string name="mcl_account_offline">오프라인</string>
 </resources>

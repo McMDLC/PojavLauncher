@@ -42,7 +42,7 @@
     <string name="mcl_tab_crash">クラッシュログ</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">接続済</string>
-    <string name="mcl_account_local">ローカル</string>
+    <string name="mcl_account_offline">ローカル</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s をプレイする準備ができました</string>
     <string name="mcl_launch_cleancache">キャッシュファイルを消去中</string>
