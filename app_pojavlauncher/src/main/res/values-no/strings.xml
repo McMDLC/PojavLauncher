@@ -180,4 +180,5 @@
     <string name="profiles_profile_name">Navn</string>
     <string name="pedit_renderer">Gjengir</string>
     <string name="mcl_account_offline">Ikke tilkoblet</string>
+    <string name="login_ely_by">Logg inn med Ely.by</string>
 </resources>

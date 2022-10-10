@@ -106,4 +106,5 @@
     <string name="customctrl_rounded">โค้งมน</string>
     <string name="mcl_memory_allocation">การจัดสรรหน่วยความจำ</string>
     <string name="profiles_profile_name">ชื่อ</string>
+    <string name="login_ely_by">เข้าสู่ระบบ Ely.by</string>
 </resources>

@@ -245,4 +245,5 @@
     <string name="pedit_java_runtime">Java Runtime</string>
     <string name="pedit_renderer">רינדור</string>
     <string name="migrated_profile_str">%s גרסת תצורה</string>
+    <string name="login_ely_by">התחברות Ely.by</string>
 </resources>
