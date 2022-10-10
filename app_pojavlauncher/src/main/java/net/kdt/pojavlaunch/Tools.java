@@ -165,6 +165,9 @@ public final class Tools {
         if (versionInfo.logging != null) {
             javaArgList.add("-Dlog4j.configurationFile=" + Tools.DIR_GAME_NEW + "/" + versionInfo.logging.client.file.id);
         }
+        if (profile.isElyBy) {
+            javaArgList.add("-javaagent:" + Tools.DIR_GAME_NEW + "/authlib-injector.jar=ely.by");
+        }
         javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionName, gamedirPath)));
         javaArgList.add("-cp");
         javaArgList.add(getLWJGL3ClassPath() + ":" + launchClassPath);

@@ -262,4 +262,5 @@
     <string name="arc_capes_title">Kápě Cosmetica</string>
     <string name="arc_capes_desc">Vyžadujíc OptiFine, zapne kápě z Cosmeticy (dřiv Arc). Pro více informací navštivte https://cosmetica.cc.</string>
     <string name="migrated_profile_str">Konfigurace verze %s</string>
+    <string name="login_ely_by">Ely.by přihlášení</string>
 </resources>

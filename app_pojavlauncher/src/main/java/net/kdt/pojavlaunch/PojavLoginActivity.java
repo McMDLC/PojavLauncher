@@ -43,6 +43,8 @@ import androidx.core.content.ContextCompat;
 
 import net.kdt.pojavlaunch.authenticator.microsoft.MicrosoftAuthTask;
 import net.kdt.pojavlaunch.authenticator.microsoft.ui.MicrosoftLoginGUIActivity;
+import net.kdt.pojavlaunch.authenticator.elyby.ElyByAuthTask;
+import net.kdt.pojavlaunch.authenticator.elyby.ui.ElyByLoginGUIActivity;
 import net.kdt.pojavlaunch.authenticator.mojang.InvalidateTokenTask;
 import net.kdt.pojavlaunch.authenticator.mojang.LoginListener;
 import net.kdt.pojavlaunch.authenticator.mojang.LoginTask;
@@ -340,6 +342,7 @@ public class PojavLoginActivity extends BaseActivity {
             Tools.copyAssetFile(this, "components/security/pro-grade.jar", Tools.DIR_DATA, true);
             Tools.copyAssetFile(this, "components/security/java_sandbox.policy", Tools.DIR_DATA, true);
             Tools.copyAssetFile(this, "options.txt", Tools.DIR_GAME_NEW, false);
+            Tools.copyAssetFile(this, "authlib-injector.jar", Tools.DIR_GAME_NEW, false);
             // TODO: Remove after implement.
             Tools.copyAssetFile(this, "launcher_profiles.json", Tools.DIR_GAME_NEW, false);
             Tools.copyAssetFile(this,"resolv.conf",Tools.DIR_DATA, true);
@@ -383,7 +386,7 @@ public class PojavLoginActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK) {
             if (requestCode == MultiRTConfigDialog.MULTIRT_PICK_RUNTIME_STARTUP) {
                 if (data != null) {
                     final Uri uri = data.getData();
@@ -405,9 +408,12 @@ public class PojavLoginActivity extends BaseActivity {
                     });
                     t.start();
                 }
-            }else if(requestCode == MicrosoftLoginGUIActivity.AUTHENTICATE_MICROSOFT_REQUEST) {
+            } else if (requestCode == MicrosoftLoginGUIActivity.AUTHENTICATE_MICROSOFT_REQUEST) {
                 //Log.i("MicroLoginWrap","Got microsoft login result:" + data);
                 performMicroLogin(data);
+            } else if (requestCode == ElyByLoginGUIActivity.AUTHENTICATE_ELYBY_REQUEST) {
+                //Log.i("ElyByLoginWrap","Got ely.by login result:" + data);
+                performElyByLogin(data);
             }
         }
     }
@@ -523,6 +529,39 @@ public class PojavLoginActivity extends BaseActivity {
             }
         }
     }
+    public void loginElyBy(View view) {
+        Intent i = new Intent(this,ElyByLoginGUIActivity.class);
+        startActivityForResult(i,ElyByLoginGUIActivity.AUTHENTICATE_ELYBY_REQUEST);
+    }
+    public void performElyByLogin(Intent intent) {
+        Uri data = intent.getData();
+        //Log.i("ElyByAuth", data.toString());
+        if (data != null && data.getScheme().equals("pojavlauncher") && data.getHost().equals("ely.by")) {
+            String error = data.getQueryParameter("error");
+            String error_description = data.getQueryParameter("error_description");
+            if (error != null) {
+                // "The user has denied access to the scope requested by the client application": user pressed Cancel button, skip it
+                if (!error_description.startsWith("The user has denied access to the scope requested by the client application")) {
+                    Toast.makeText(this, "Error: " + error + ": " + error_description, Toast.LENGTH_LONG).show();
+                }
+            } else {
+                String code = data.getQueryParameter("code");
+                new ElyByAuthTask(this, new RefreshListener(){
+                    @Override
+                    public void onFailed(Throwable e) {
+                        Tools.showError(PojavLoginActivity.this, e);
+                    }
+
+                    @Override
+                    public void onSuccess(MinecraftAccount b) {
+                        mProfile = b;
+                        playProfile(false);
+                    }
+                }).execute("false", code);
+                // Toast.makeText(this, "Logged in to Microsoft account, but NYI", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
     private View getViewFromList(int pos, ListView listView) {
         final int firstItemPos = listView.getFirstVisiblePosition();
         final int lastItemPos = firstItemPos + listView.getChildCount() - 1;
@@ -595,6 +634,9 @@ public class PojavLoginActivity extends BaseActivity {
                         }
                         if (acc.isMicrosoft){
                             new MicrosoftAuthTask(PojavLoginActivity.this, authListener)
+                                    .execute("true", acc.msaRefreshToken);
+                        }else if (acc.isElyBy){
+                            new ElyByAuthTask(PojavLoginActivity.this, authListener)
                                     .execute("true", acc.msaRefreshToken);
                         } else {
                             accountDialog.dismiss();

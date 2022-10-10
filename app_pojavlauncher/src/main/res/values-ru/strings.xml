@@ -263,4 +263,5 @@
     <string name="arc_capes_title">Плащи Cosmetica</string>
     <string name="arc_capes_desc">Включает плащи от Cosmetica (ранее Arc). Для получения дополнительной информации, пожалуйста, посетите https://cosmetica.cc. Требуется OptiFine.</string>
     <string name="migrated_profile_str">Конфигурация версии %s</string>
+    <string name="login_ely_by">Войти через Ely.by</string>
 </resources>

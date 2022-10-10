@@ -199,4 +199,5 @@
     <string name="pvc_title">Individualios versijos nustatymai</string>
     <string name="profiles_profile_name">Pavadinimas</string>
     <string name="pedit_renderer">Vaizdo generatorius</string>
+    <string name="login_ely_by">Ely.by prisijungimas</string>
 </resources>

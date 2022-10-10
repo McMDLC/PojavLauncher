@@ -253,4 +253,5 @@
     <string name="arc_capes_title">コスメチカ・ケープズ</string>
     <string name="arc_capes_desc">Cosmetica（以前のArc）のケープを有効にします。詳細については、https：//cosmetica.ccをご覧ください。 OptiFineが必要です。</string>
     <string name="migrated_profile_str">%s バージョンの設定</string>
+    <string name="login_ely_by">Ely.by でログイン</string>
 </resources>

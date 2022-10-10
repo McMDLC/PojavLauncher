@@ -173,4 +173,5 @@
     <string name="profiles_profile_name">Naam</string>
     <string name="pedit_renderer">Renderer</string>
     <string name="mcl_account_offline">Offline</string>
+    <string name="login_ely_by">Ely.by-login</string>
 </resources>
