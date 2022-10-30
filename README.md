@@ -2,8 +2,18 @@
 
 <img src="https://github.com/asaldele1/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
-[![Android CI](https://github.com/asaldele1/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/asaldele1/PojavLauncher/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/asaldele1/PojavLauncher)](https://github.com/asaldele1/PojavLauncher/actions)
+[![Android CI](https://github.com/asaldele1/blocktopograph/workflows/Android%20CI/badge.svg)](https://github.com/asaldele1/blocktopograph/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/asaldele1/blocktopograph)](https://github.com/asaldele1/blocktopograph/actions)
+[![MDLC](https://img.shields.io/endpoint?color=neon&style=flat&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fmdlc_public&label=MDLC)](https://t.me/mdlc_public)
+[![Downloads](https://img.shields.io/github/downloads/asaldele1/blocktopograph/total)](https://github.com/asaldele1/blocktopograph/releases)
+---------
+### This modification is produced by [asalde_le1](https://github.com/asaldele1) and [MDLC](https://github.com/McMDLC) group.
+<br><br>
+#### Mod features:
+* Added [ely.by](https://ely.by) authorization method.
+* Local mode replaced with offline mode.
+* Fixed a bag when some buttons from standard virtual keyboard did not translate.
+
 ---------
 * From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!
 
@@ -12,9 +22,6 @@
 * It can run almost every version of the Minecraft, allowing you to use .jar only installers to install modloaders like [forge](https://files.minecraftforge.net/), [fabric](http://fabricmc.net/), [optifine](https://optifine.net); Utility and hack clients like [LabyMod](https://www.labymod.net/en), [Wurst](https://www.wurstclient.net/) and much more!
 
 * For more details [check out our wiki](https://github.com/asaldele1/PojavLauncher/wiki)
-## Some notes to start with
-- We do not exist on TikTok. No one from the dev team makes TikTok videos. 
-- The official Twitter for PojavLauncher is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake, please report them to Twitter's moderation team.
 
 ## Navigation
 - [Introduction](#introduction)  
@@ -27,10 +34,9 @@
 
 ## Introduction 
 * PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
-* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.19 snapshots (including Combat Test versions). 
+* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.19 (including Combat Test versions). 
 * Modding via Forge and Fabric are also supported. 
 * This repository contains source code for Android. 
-* For iOS/iPadOS, check out [PojavLauncher_iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS).
 
 ## Getting PojavLauncher
 
@@ -38,10 +44,7 @@ Getting PojavLauncher is divided into 3 parts.
 
 1. You can get prebuilt app from [stable releases](https://github.com/asaldele1/PojavLauncher/releases) or [automatic builds](https://github.com/asaldele1/PojavLauncher/actions).
 
-2. You can get it from Google Play by clicking:
-[![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=net.kdt.pojavlaunch)
-
-3. You can [build](#building) from source.
+2. You can [build](#building) from source.
 ## Building
 If you want to build after launcher code changes, follow the steps below.
 ### Java Runtime Environment (JRE)
