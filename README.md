@@ -1,41 +1,63 @@
-[![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
-[![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/6RpEJda)
-[![Reddit](https://img.shields.io/badge/dynamic/json.svg?label=r/PojavLauncher%20member%20count&query=$.data.subscribers&url=https://www.reddit.com/r/PojavLauncher/about.json)](https://reddit.com/r/PojavLauncher) 
-[![Google Play](https://gist.githubusercontent.com/meefik/54a54afa7cc1dc600bdb855cb7895a4a/raw/ad617c006a1ac28d067c9a87cec60199ca8fef7c/get-it-on-google-play.png)](https://play.google.com/store/apps/details?id=net.kdt.pojavlaunch) 
+<H1 align="center">PojavLauncher</H1>
 
-# PojavLauncher 
+<img src="https://github.com/asaldele1/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
-## Note
-- We do not exist on TikTok. No one from the dev team makes TikTok videos. 
-- The official Twitter for PojavLauncher is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake, please report them to Twitter's moderation team.
+[![Android CI](https://github.com/asaldele1/blocktopograph/workflows/Android%20CI/badge.svg)](https://github.com/asaldele1/blocktopograph/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/asaldele1/blocktopograph)](https://github.com/asaldele1/blocktopograph/actions)
+[![MDLC](https://img.shields.io/endpoint?color=neon&style=flat&url=https%3A%2F%2Ftg.sumanjay.workers.dev%2Fmdlc_public&label=MDLC)](https://t.me/mdlc_public)
+[![Downloads](https://img.shields.io/github/downloads/asaldele1/blocktopograph/total)](https://github.com/asaldele1/blocktopograph/releases)
+---------
+### This modification is produced by [asalde_le1](https://github.com/asaldele1) and [MDLC](https://github.com/McMDLC) group.
+<br><br>
+#### Mod features:
+* Added [ely.by](https://ely.by) authorization method.
+* Local mode replaced with offline mode.
+* Fixed a bag when some buttons from standard virtual keyboard did not translate.
+
+---------
+* From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!
+
+* PojavLauncher is a launcher that allows you to play Minecraft:Java Edition on your Android device!
+
+* It can run almost every version of the Minecraft, allowing you to use .jar only installers to install modloaders like [forge](https://files.minecraftforge.net/), [fabric](http://fabricmc.net/), [optifine](https://optifine.net); Utility and hack clients like [LabyMod](https://www.labymod.net/en), [Wurst](https://www.wurstclient.net/) and much more!
+
+* For more details [check out our wiki](https://github.com/asaldele1/PojavLauncher/wiki)
 
 ## Navigation
 - [Introduction](#introduction)  
+- [Getting PojavLauncher](#getting-pojavlauncher)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
 - [Contributing](#contributing) 
-- [Credits & Third party components and their licenses](#credits--third-party-components-and-their-licenses)
+- [Credits & Third party components and their licenses](#credits--third-party-components-and-their-licenses-if-available)
 
 ## Introduction 
-PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). This launcher can launch almost all available Minecraft versions (from rd-132211 to 1.18 snapshots (kinda)), including Combat Test versions. Modding via Forge (up to 1.16.5) and Fabric are also supported. This repository contains source code for Android. For iOS/iPadOS, check out [PojavLauncher_iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS).
+* PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
+* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.19 (including Combat Test versions). 
+* Modding via Forge and Fabric are also supported. 
+* This repository contains source code for Android. 
 
+## Getting PojavLauncher
+
+Getting PojavLauncher is divided into 3 parts.
+
+1. You can get prebuilt app from [stable releases](https://github.com/asaldele1/PojavLauncher/releases) or [automatic builds](https://github.com/asaldele1/PojavLauncher/actions).
+
+2. You can [build](#building) from source.
 ## Building
-To get started, you can just get prebuilt app from [stable release](https://github.com/PojavLauncherTeam/PojavLauncher/releases) or [automatic builds](https://github.com/PojavLauncherTeam/PojavLauncher/actions). If you want to build after launcher code changes, follow steps below.
-
-Will be moved to **BUILDING.md**
+If you want to build after launcher code changes, follow the steps below.
 ### Java Runtime Environment (JRE)
-- JRE for Android is [here](https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u), also the build script [here](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch).
+- JRE for Android is [here](https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u), and the build script is [here](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch).
 - Follow build instruction on build script [README.md](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/blob/buildjre8/README.md).
-- You can also get [CI auto builds](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/actions).
-- Either get `jre8-pojav` artifact from auto builds, or do splitting by yourself:</br>
-        - Get JREs for all of 4 supported architectures (arm, arm64, x86, x86_64) </br> 
-        - Split JRE into parts:</br>
+- You can also get [CI auto builds](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/actions) if you are lazy or failing it for some reason.
+* Either get `jre8-pojav` artifact from auto builds, or do splitting by yourself:</br>
+   - Get JREs for all of 4 supported architectures (arm, arm64, x86, x86_64) </br> 
+      - Split JRE into parts:</br>
                 Platform-independent: .jar files, libraries, configs, etc...</br>
                 Platform-dependent: .so files, etc...</br>
         - Create:</br>
-                file named `universal.tar.xz` with all platform-independent files</br>
+                A file named `universal.tar.xz` with all platform-independent files</br>
                 4 files named `bin-<arch>.tar.xz` with all platform-dependent files per-architecture</br>
         - Put these in `assets/components/jre/` folder</br>
         - (If needed) update the Version file with the current date</br>
@@ -44,21 +66,25 @@ Will be moved to **BUILDING.md**
 - **Coming soon**
 
 ### The Launcher
-- Because languages are auto added by Crowdin, so need to run language list generator before building. In this directory, run:
+- Because languages are auto added by Crowdin, you need to run language list generator before building. In the project directory, run:
+
+* On Linux, Mac OS:
 ```
-# On Linux, Mac OS:
 chmod +x scripts/languagelist_updater.sh
 bash scripts/languagelist_updater.sh
-
-# On Windows:
+```
+* On Windows:
+```
 scripts\languagelist_updater.bat
 ```
-- Then, run these commands ~~build use Android Studio~~.
+Then, run these commands ~~or build using Android Studio~~.
+
+* Build GLFW stub:
 ```
-# Build GLFW stub
 ./gradlew :jre_lwjgl3glfw:build
-        
-# Build the launcher
+```       
+* Build the launcher
+```
 ./gradlew :app_pojavlauncher:assembleDebug
 ```
 (Replace `gradlew` to `gradlew.bat` if you are building on Windows).
@@ -66,32 +92,33 @@ scripts\languagelist_updater.bat
 ## Current status
 - [x] ~~OpenJDK 9 Mobile port: ARM32, ARM64, x86, x86_64.~~ Replaced by JRE8.
 - [x] OpenJDK 8 Mobile port: ARM32, ARM64, x86, x86_64
+- [x] OpenJDK 17 Mobile port: ARM32, ARM64, x86, x86_64
 - [x] Mod installer headless
 - [x] Mod installer with GUI. Used `Caciocavallo` project for AWT without X11.
 - [x] OpenGL in OpenJDK environment
-- [x] OpenAL (work on most devices)
-- [x] Support Minecraft 1.12.2 and below. Used [lwjglx](https://github.com/PojavLauncherTeam/lwjglx), a LWJGL2 compatibility layer for LWJGL3.
-- [x] Support Minecraft 1.13 and above. Used [GLFW stub](https://github.com/PojavLauncherTeam/lwjgl3-glfw-java).
+- [x] OpenAL (works on most devices)
+- [x] Support for Minecraft 1.12.2 and below. Used [lwjglx](https://github.com/PojavLauncherTeam/lwjglx), a LWJGL2 compatibility layer for LWJGL3.
+- [x] Support for Minecraft 1.13 and above. Used [GLFW stub](https://github.com/PojavLauncherTeam/lwjgl3-glfw-java).
+- [x] Support for Minecraft 1.17 (22w13a to be exact) and above. Used [Holy GL4ES](https://github.com/PojavLauncherTeam/gl4es-114-extra)
 - [x] Game surface zooming.
 - [x] New input pipe rewritten to native code to boost performance.
-- [ ] More...
+- [x] Rewritten entire controls system (thanks to @Mathias-Boulay)
+- [ ] More to come!
 
 ## Known Issues
-- Minecraft `21w10a` or newer are currently not yet supported due to the new GLSL usage. Fortunately, a workaround is provided and built into the launcher.
-- In 1.16 and up, spawn eggs banners are white (you can fix this by switching renderer
-to `gl4es 1.1.5`, only works on 1.16 and up, do not use under this version, as the texture
-will bug out when hit a mob)
 - Controller mods aren't working.
 - Random crashes could happen very often on Android 5.x during game load or join world.
 - With big modpacks textures could be messed up
-- probably more, that's why we have a bug tracker ;) 
+- Probably more, that's why we have a bug tracker ;) 
 
 ## License
 - PojavLauncher is licensed under [GNU GPLv3](https://github.com/khanhduytran0/PojavLauncher/blob/master/LICENSE).
 
 ## Contributing
-Contributions are welcome! We welcome any type of contribution, not only code.
-Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
+Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help the wiki shape up. You can help the [translation](https://crowdin.com/project/pojavlauncher) too!
+
+
+Any code change to this repository (or iOS) should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
 
 ## Credits & Third party components and their licenses (if available)
 - [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
