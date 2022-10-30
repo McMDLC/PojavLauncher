@@ -2,14 +2,20 @@ package net.kdt.pojavlaunch.value;
 
 
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import net.kdt.pojavlaunch.*;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import com.google.gson.*;
 import android.graphics.Bitmap;
 import android.util.Base64;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MinecraftAccount
 {
@@ -23,7 +29,10 @@ public class MinecraftAccount
     public String msaRefreshToken = "0";
     public String skinFaceBase64;
     public long expiresAt;
-    
+
+    public static final String usernameToUuidUrl = "https://api.mojang.com/users/profiles/minecraft";
+    public static final String usernameToUuidUrlElyBy = "https://authserver.ely.by/api/users/profiles/minecraft";
+
     void updateSkinFace(String uuid) {
         try {
             if (!isElyBy) {
@@ -38,20 +47,20 @@ public class MinecraftAccount
             Log.w("SkinLoader", "Could not update skin face", e);
         }
     }
-    
+
     public void updateSkinFace() {
         updateSkinFace(profileId);
     }
-    
+
     public String save(String outPath) throws IOException {
         Tools.write(outPath, Tools.GLOBAL_GSON.toJson(this));
         return username;
     }
-    
+
     public String save() throws IOException {
         return save(Tools.DIR_ACCOUNT_NEW + "/" + username + ".json");
     }
-    
+
     public static MinecraftAccount parse(String content) throws JsonSyntaxException {
         return Tools.GLOBAL_GSON.fromJson(content, MinecraftAccount.class);
     }
@@ -104,10 +113,28 @@ public class MinecraftAccount
         File tempAccFile = new File(Tools.DIR_DATA, "cache/tempacc.json");
         tempAccFile.delete();
     }
-    
+
     public static void saveTempAccount(MinecraftAccount acc) throws IOException {
         File tempAccFile = new File(Tools.DIR_DATA, "cache/tempacc.json");
         tempAccFile.delete();
         acc.save(tempAccFile.getAbsolutePath());
+    }
+
+    public static class GetID extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... args) {
+            try {
+                URL url = new URL(args[0] + "/" + args[1]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+                if (conn.getResponseCode() == 200) {
+                    return new JSONObject(Tools.read(conn.getInputStream())).getString("id");
+                }
+                return "00000000-0000-0000-0000-000000000000";
+            } catch (JSONException | IOException e) {
+                return "00000000-0000-0000-0000-000000000000";
+            }
+        }
+
     }
 }

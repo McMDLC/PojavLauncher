@@ -190,4 +190,6 @@
     <string name="pedit_renderer">Renderer</string>
     <string name="mcl_account_offline">Offline</string>
     <string name="login_ely_by">Microsoft login</string>
+    <string name="use_online_uuid">Get uuid from servers</string>
+    <string name="use_elyby_uuid">Get uuid skin from ely.by</string>
 </resources>

@@ -190,4 +190,22 @@
         app:layout_constraintStart_toStartOf="@+id/login_edit_password"
         app:layout_constraintTop_toBottomOf="@+id/login_edit_password" />
 
+    <CheckBox
+        android:id="@+id/use_online_uuid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/use_online_uuid"
+        app:layout_constraintStart_toStartOf="@+id/mineButton4"
+        app:layout_constraintTop_toBottomOf="@+id/login_edit_password" />
+
+    <CheckBox
+        android:id="@+id/use_elyby_uuid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/use_elyby_uuid"
+        app:layout_constraintStart_toStartOf="@+id/mineButton4"
+        app:layout_constraintTop_toBottomOf="@+id/login_switch_offline" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

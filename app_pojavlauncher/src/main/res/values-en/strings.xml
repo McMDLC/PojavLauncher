@@ -222,4 +222,6 @@
     <string name="profiles_profile_name">Name</string>
     <string name="pedit_renderer">Renderer</string>
     <string name="login_ely_by">Ely.by login</string>
+    <string name="use_online_uuid">Get uuid from servers</string>
+    <string name="use_elyby_uuid">Get uuid skin from ely.by</string>
 </resources>

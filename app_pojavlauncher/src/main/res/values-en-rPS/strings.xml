@@ -84,4 +84,6 @@
     <string name="profiles_profile_name">Title on yer forhead</string>
     <string name="mcl_account_offline">Offline</string>
     <string name="login_ely_by">Hop aboard with Ely.by</string>
+    <string name="use_online_uuid">Get uuid from servers</string>
+    <string name="use_elyby_uuid">Get uuid skin from ely.by</string>
 </resources>

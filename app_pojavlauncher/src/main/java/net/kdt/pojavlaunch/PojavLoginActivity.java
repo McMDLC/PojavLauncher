@@ -70,8 +70,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.jar.Attributes;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
@@ -83,7 +86,7 @@ public class PojavLoginActivity extends BaseActivity {
     
     private EditText edit2, edit3;
     private final int REQUEST_STORAGE_REQUEST_CODE = 1;
-    private CheckBox sRemember, sOffline;
+    private CheckBox sRemember, sOffline, sOnlineUUID, sElybyUUID;
     private TextView startupTextView;
     private SharedPreferences firstLaunchPrefs;
     private MinecraftAccount mProfile = null;
@@ -235,11 +238,16 @@ public class PojavLoginActivity extends BaseActivity {
         edit3 = findViewById(R.id.login_edit_password);
         sRemember = findViewById(R.id.login_switch_remember);
         sOffline = findViewById(R.id.login_switch_offline);
+        sOnlineUUID = findViewById(R.id.use_online_uuid);
+        sElybyUUID = findViewById(R.id.use_elyby_uuid);
         sOffline.setOnCheckedChangeListener((p1, p2) -> {
             // May delete later
             edit3.setEnabled(!p2);
+            sOnlineUUID.setEnabled(p2);
         });
-        isSkipInit = true;
+        sOnlineUUID.setOnCheckedChangeListener((p1, p2) -> {
+            sElybyUUID.setEnabled(p2);
+        });
     }
 
     /** @return The index in the array adapter for a given language, or english. -1 if not found */
@@ -633,7 +641,7 @@ public class PojavLoginActivity extends BaseActivity {
                         if (acc.isMicrosoft && System.currentTimeMillis() > acc.expiresAt){
                             new MicrosoftAuthTask(PojavLoginActivity.this, authListener)
                                     .execute("true", acc.msaRefreshToken);
-                        }else if (acc.isElyBy){
+                        }else if (acc.isElyBy && acc.clientToken != null){
                             new ElyByAuthTask(PojavLoginActivity.this, authListener)
                                     .execute("true", acc.msaRefreshToken);
                         } else {
@@ -690,9 +698,28 @@ public class PojavLoginActivity extends BaseActivity {
             MinecraftAccount builder = new MinecraftAccount();
             builder.isMicrosoft = false;
             builder.username = text;
+
+            if (sOnlineUUID.isChecked()) {
+                try {
+                    builder.profileId = (String) new MinecraftAccount.GetID().execute(sElybyUUID.isChecked() ? builder.usernameToUuidUrlElyBy : builder.usernameToUuidUrl, builder.username).get();
+                } catch (ExecutionException e) {
+                    Tools.showError(PojavLoginActivity.this, e);
+                } catch (InterruptedException e) {
+                    Tools.showError(PojavLoginActivity.this, e);
+                }
+                builder.isElyBy = sElybyUUID.isChecked();
+            }
+            if (builder.profileId == "00000000-0000-0000-0000-000000000000") {
+                try {
+                    builder.profileId = UUID.nameUUIDFromBytes(("OfflinePlayer:" + builder.username).getBytes("UTF-8")).toString();
+                } catch (UnsupportedEncodingException e) {
+                    Tools.showError(PojavLoginActivity.this, e);
+                }
+            }
             
             return builder;
         }
+
         return null;
     }
 
