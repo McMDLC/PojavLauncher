@@ -50,7 +50,7 @@ public class PojavProfile {
                 account.username = "0";
             }
             if (account.selectedVersion == null) {
-                account.selectedVersion = "1.7.10";
+                account.selectedVersion = "1.16.5";
             }
             if (account.msaRefreshToken == null) {
                 account.msaRefreshToken = "0";
