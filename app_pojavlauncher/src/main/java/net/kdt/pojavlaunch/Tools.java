@@ -45,7 +45,7 @@ public final class Tools {
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    public static final String URL_HOME = "https://asaldele1.github.io/PojavLauncher";
+    public static final String URL_HOME = "https://mcmdlc.github.io/PojavLauncher";
 
     public static String DIR_DATA; //Initialized later to get context
     public static String MULTIRT_HOME;
