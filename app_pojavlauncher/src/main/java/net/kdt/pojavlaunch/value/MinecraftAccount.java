@@ -51,7 +51,7 @@ public class MinecraftAccount {
         }
     }
 
-    public boolean isLocal(){
+    public boolean isOffline(){
         return accessToken.equals("0");
     }
     
@@ -114,5 +114,23 @@ public class MinecraftAccount {
 
     private static boolean accountExists(String username){
         return new File(Tools.DIR_ACCOUNT_NEW + "/" + username + ".json").exists();
+    }
+    
+    public static class GetID extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... args) {
+            try {
+                URL url = new URL(args[0] + "/" + args[1]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.connect();
+                if (conn.getResponseCode() == 200) {
+                    return new JSONObject(Tools.read(conn.getInputStream())).getString("id");
+                }
+                return "00000000-0000-0000-0000-000000000000";
+            } catch (JSONException | IOException e) {
+                return "00000000-0000-0000-0000-000000000000";
+            }
+        }
+
     }
 }

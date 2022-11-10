@@ -634,7 +634,7 @@ public class PojavLoginActivity extends BaseActivity {
                         if (acc.isMicrosoft && System.currentTimeMillis() > acc.expiresAt){
                             new MicrosoftAuthTask(PojavLoginActivity.this, authListener)
                                     .execute("true", acc.msaRefreshToken);
-                        }else if (acc.isElyBy && acc.clientToken != null){
+                        }else if (acc.isElyBy && System.currentTimeMillis() > acc.expiresAt && !acc.isOffline){
                             new ElyByAuthTask(PojavLoginActivity.this, authListener)
                                     .execute("true", acc.msaRefreshToken);
                         } else {

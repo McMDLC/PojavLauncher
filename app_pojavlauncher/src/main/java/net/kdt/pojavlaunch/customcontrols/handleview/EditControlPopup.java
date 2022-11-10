@@ -209,7 +209,7 @@ public class EditControlPopup {
     private void loadAdapter(){
         //Initialize adapter for keycodes
         mAdapter = new ArrayAdapter<>(mRootView.getContext(), R.layout.item_centered_textview);
-        mSpecialArray = ControlData.buildSpecialButtonArray();
+        mSpecialArray = ControlData.buildSpecialButtonArray(ctx);
         for (int i = 0; i < mSpecialArray.length; i++) {
             //TODO this will break for sure
             mSpecialArray[i] = "SPECIAL_" + mSpecialArray[i];
