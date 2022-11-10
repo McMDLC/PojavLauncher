@@ -6,19 +6,18 @@ import android.database.Cursor;
 import android.net.*;
 import android.os.*;
 import android.provider.OpenableColumns;
-import android.system.*;
 import android.util.*;
 import com.google.gson.*;
-import com.oracle.dalvik.*;
+
 import java.io.*;
 import java.lang.reflect.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.zip.*;
+
+import net.kdt.pojavlaunch.extra.ExtraConstants;
+import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.prefs.*;
 import net.kdt.pojavlaunch.utils.*;
 import net.kdt.pojavlaunch.value.*;
@@ -26,17 +25,15 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
 import org.lwjgl.glfw.*;
 import android.view.*;
-import android.widget.Toast;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.P;
-import static android.os.Build.VERSION_CODES.Q;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
+
+import androidx.annotation.NonNull;
 
 public final class Tools {
     public static final boolean ENABLE_DEV_FEATURES = BuildConfig.DEBUG;
@@ -101,7 +98,7 @@ public final class Tools {
     }
 
 
-    public static void launchMinecraft(final Activity activity, MinecraftAccount profile, String versionName) throws Throwable {
+    public static void launchMinecraft(final Activity activity, MinecraftAccount minecraftAccount, MinecraftProfile minecraftProfile) throws Throwable {
         ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
         ((ActivityManager)activity.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryInfo(mi);
         if(LauncherPreferences.PREF_RAM_ALLOCATION > (mi.availMem/1048576L)) {
@@ -118,26 +115,25 @@ public final class Tools {
             }
         }
 
-        JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(null,versionName);
-        String gamedirPath = Tools.DIR_GAME_NEW;
-        if(activity instanceof BaseMainActivity) {
-            LauncherProfiles.update();
-            MinecraftProfile minecraftProfile = ((BaseMainActivity)activity).minecraftProfile;
-            if(minecraftProfile == null) throw new Exception("Launching empty Profile");
-            if(minecraftProfile.gameDir != null && minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
-                gamedirPath = minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/");
-            if(minecraftProfile.javaArgs != null && !minecraftProfile.javaArgs.isEmpty())
-                LauncherPreferences.PREF_CUSTOM_JAVA_ARGS = minecraftProfile.javaArgs;
-        }
-        PojavLoginActivity.disableSplash(gamedirPath);
-        String[] launchArgs = getMinecraftClientArgs(profile, versionInfo, gamedirPath);
+
+        JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(MainActivity.minecraftProfile.lastVersionId);
+
+        LauncherProfiles.update();
+        String gamedirPath = Tools.getGameDirPath(minecraftProfile);
+
+        if(minecraftProfile.javaArgs != null && !minecraftProfile.javaArgs.isEmpty())
+            LauncherPreferences.PREF_CUSTOM_JAVA_ARGS = minecraftProfile.javaArgs;
+
+        // Pre-process specific files
+        disableSplash(gamedirPath);
+        String[] launchArgs = getMinecraftClientArgs(minecraftAccount, versionInfo, gamedirPath);
 
         // Select the appropriate openGL version
         OldVersionsUtils.selectOpenGlVersion(versionInfo);
 
         // ctx.appendlnToLog("Minecraft Args: " + Arrays.toString(launchArgs));
 
-        String launchClassPath = generateLaunchClassPath(versionInfo,versionName);
+        String launchClassPath = generateLaunchClassPath(versionInfo, minecraftProfile.lastVersionId);
 
         List<String> javaArgList = new ArrayList<String>();
 
@@ -163,10 +159,7 @@ public final class Tools {
             }
             javaArgList.add("-Dlog4j.configurationFile=" + configFile);
         }
-        if (profile.isElyBy) {
-            javaArgList.add("-javaagent:" + Tools.DIR_DATA + "/authlib-injector.jar=ely.by");
-        }
-        javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionName, gamedirPath)));
+        javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(minecraftProfile.lastVersionId, gamedirPath)));
         javaArgList.add("-cp");
         javaArgList.add(getLWJGL3ClassPath() + ":" + launchClassPath);
 
@@ -176,6 +169,38 @@ public final class Tools {
         JREUtils.launchJavaVM(activity, javaArgList);
     }
 
+    public static String getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
+        if(minecraftProfile.gameDir != null){
+            if(minecraftProfile.gameDir.startsWith(Tools.LAUNCHERPROFILES_RTPREFIX))
+                return minecraftProfile.gameDir.replace(Tools.LAUNCHERPROFILES_RTPREFIX,Tools.DIR_GAME_HOME+"/");
+            else
+                return Tools.DIR_GAME_HOME + minecraftProfile.gameDir;
+        }
+        return Tools.DIR_GAME_NEW;
+    }
+
+    private static boolean mkdirs(String path) {
+        File file = new File(path);
+        return file.mkdirs();
+    }
+
+    public static void disableSplash(String dir) {
+        mkdirs(dir + "/config");
+        File forgeSplashFile = new File(dir, "config/splash.properties");
+        String forgeSplashContent = "enabled=true";
+        try {
+            if (forgeSplashFile.exists()) {
+                forgeSplashContent = Tools.read(forgeSplashFile.getAbsolutePath());
+            }
+            if (forgeSplashContent.contains("enabled=true")) {
+                Tools.write(forgeSplashFile.getAbsolutePath(),
+                        forgeSplashContent.replace("enabled=true", "enabled=false"));
+            }
+        } catch (IOException e) {
+            Log.w(Tools.APP_NAME, "Could not disable Forge 1.12.2 and below splash screen!", e);
+        }
+    }
+    
     public static void getCacioJavaArgs(List<String> javaArgList, boolean isJava8) {
         // Caciocavallo config AWT-enabled version
         javaArgList.add("-Djava.awt.headless=false");
@@ -225,7 +250,7 @@ public final class Tools {
     }
 
     public static String[] getMinecraftJVMArgs(String versionName, String strGameDir) {
-        JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(null, versionName, true);
+        JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionName, true);
         // Parse Forge 1.17+ additional JVM Arguments
         if (versionInfo.inheritsFrom == null || versionInfo.arguments == null || versionInfo.arguments.jvm == null) {
             return new String[0];
@@ -521,27 +546,26 @@ public final class Tools {
         Runnable runnable = () -> {
             final String errMsg = showMore ? Log.getStackTraceString(e): e.getMessage();
             AlertDialog.Builder builder = new AlertDialog.Builder((Context) ctx)
-                    .setTitle(titleId)
-                    .setMessage(errMsg)
-                    .setPositiveButton(android.R.string.ok, (DialogInterface.OnClickListener) (p1, p2) -> {
-                        if(exitIfOk) {
-                            if (ctx instanceof BaseMainActivity) {
-                                BaseMainActivity.fullyExit();
-                            } else if (ctx instanceof Activity) {
-                                ((Activity) ctx).finish();
-                            }
+                .setTitle(titleId)
+                .setMessage(errMsg)
+                .setPositiveButton(android.R.string.ok, (DialogInterface.OnClickListener) (p1, p2) -> {
+                    if(exitIfOk) {
+                        if (ctx instanceof MainActivity) {
+                            MainActivity.fullyExit();
+                        } else if (ctx instanceof Activity) {
+                            ((Activity) ctx).finish();
                         }
-                    })
-                    .setNegativeButton(showMore ? R.string.error_show_less : R.string.error_show_more, (DialogInterface.OnClickListener) (p1, p2) -> showError(ctx, titleId, e, exitIfOk, !showMore))
-                    .setNeutralButton(android.R.string.copy, (DialogInterface.OnClickListener) (p1, p2) -> {
-                        ClipboardManager mgr = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-                        mgr.setPrimaryClip(ClipData.newPlainText("error", Log.getStackTraceString(e)));
-                        if(exitIfOk) {
-                            if (ctx instanceof BaseMainActivity) {
-                                BaseMainActivity.fullyExit();
-                            } else {
-                                ((Activity) ctx).finish();
-                            }
+                    }
+                })
+                .setNegativeButton(showMore ? R.string.error_show_less : R.string.error_show_more, (DialogInterface.OnClickListener) (p1, p2) -> showError(ctx, titleId, e, exitIfOk, !showMore))
+                .setNeutralButton(android.R.string.copy, (DialogInterface.OnClickListener) (p1, p2) -> {
+                    ClipboardManager mgr = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+                    mgr.setPrimaryClip(ClipData.newPlainText("error", Log.getStackTraceString(e)));
+                    if(exitIfOk) {
+                        if (ctx instanceof MainActivity) {
+                            MainActivity.fullyExit();
+                        } else {
+                            ((Activity) ctx).finish();
                         }
                     })
                     .setCancelable(!exitIfOk);
@@ -615,11 +639,11 @@ public final class Tools {
         return libDir.toArray(new String[0]);
     }
 
-    public static JMinecraftVersionList.Version getVersionInfo(BaseLauncherActivity bla, String versionName) {
-        return getVersionInfo(bla, versionName, false);
+    public static JMinecraftVersionList.Version getVersionInfo(String versionName) {
+        return getVersionInfo(versionName, false);
     }
 
-    public static JMinecraftVersionList.Version getVersionInfo(BaseLauncherActivity bla, String versionName, boolean skipInheriting) {
+    public static JMinecraftVersionList.Version getVersionInfo(String versionName, boolean skipInheriting) {
         try {
             JMinecraftVersionList.Version customVer = Tools.GLOBAL_GSON.fromJson(read(DIR_HOME_VERSION + "/" + versionName + "/" + versionName + ".json"), JMinecraftVersionList.Version.class);
             for (DependentLibrary lib : customVer.libraries) {
@@ -631,13 +655,12 @@ public final class Tools {
                 return customVer;
             } else {
                 JMinecraftVersionList.Version inheritsVer = null;
-                if(bla != null) if (bla.mVersionList != null) {
-                    for (JMinecraftVersionList.Version valueVer : bla.mVersionList.versions) {
-                        if (valueVer.id.equals(customVer.inheritsFrom) && (!new File(DIR_HOME_VERSION + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json").exists()) && (valueVer.url != null)) {
-                            Tools.downloadFile(valueVer.url,DIR_HOME_VERSION + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json");
-                        }
+                for (JMinecraftVersionList.Version valueVer : ((JMinecraftVersionList) ExtraCore.getValue(ExtraConstants.RELEASE_TABLE)).versions) {
+                    if (valueVer.id.equals(customVer.inheritsFrom) && (!new File(DIR_HOME_VERSION + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json").exists()) && (valueVer.url != null)) {
+                        Tools.downloadFile(valueVer.url,DIR_HOME_VERSION + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json");
                     }
-                }//If it won't download, just search for it
+                }
+                //If it won't download, just search for it
                 try{
                     inheritsVer = Tools.GLOBAL_GSON.fromJson(read(DIR_HOME_VERSION + "/" + customVer.inheritsFrom + "/" + customVer.inheritsFrom + ".json"), JMinecraftVersionList.Version.class);
                 }catch(IOException e) {

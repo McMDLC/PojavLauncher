@@ -1,12 +1,13 @@
 package net.kdt.pojavlaunch;
 
-import static net.kdt.pojavlaunch.BaseMainActivity.touchCharInput;
+import static net.kdt.pojavlaunch.MainActivity.touchCharInput;
 import static net.kdt.pojavlaunch.utils.MCOptionUtils.getMcScale;
 import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
 import static org.lwjgl.glfw.CallbackBridge.sendMouseButton;
 import static org.lwjgl.glfw.CallbackBridge.windowHeight;
 import static org.lwjgl.glfw.CallbackBridge.windowWidth;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -25,10 +26,11 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
+import net.kdt.pojavlaunch.customcontrols.ControlLayout;
 import net.kdt.pojavlaunch.utils.MathUtils;
 
 import net.kdt.pojavlaunch.customcontrols.gamepad.Gamepad;
@@ -54,7 +56,7 @@ public class MinecraftGLSurface extends View {
     private final TapDetector mSingleTapDetector = new TapDetector(1, TapDetector.DETECTION_METHOD_BOTH);
     private final TapDetector mDoubleTapDetector = new TapDetector(2, TapDetector.DETECTION_METHOD_DOWN);
     /* MC GUI scale, listened by MCOptionUtils */
-    private int mGuiScale = getMcScale();
+    private int mGuiScale;
     private final MCOptionUtils.MCOptionListener mGuiScaleListener = () -> mGuiScale = getMcScale();
     /* Surface ready listener, used by the activity to launch minecraft */
     SurfaceReadyListener mSurfaceReadyListener = null;
@@ -207,6 +209,9 @@ public class MinecraftGLSurface extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent e) {
+        // Kinda need to send this back to the layout
+        if(((ControlLayout)getParent()).getModifiable()) return false;
+
         // Looking for a mouse to handle, won't have an effect if no mouse exists.
         for (int i = 0; i < e.getPointerCount(); i++) {
             if(e.getToolType(i) != MotionEvent.TOOL_TYPE_MOUSE && e.getToolType(i) != MotionEvent.TOOL_TYPE_STYLUS ) continue;
@@ -383,6 +388,7 @@ public class MinecraftGLSurface extends View {
      * The event for mouse/joystick movements
      * We don't do the gamepad right now.
      */
+    @SuppressLint("NewApi")
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
         int mouseCursorIndex = -1;
@@ -404,7 +410,7 @@ public class MinecraftGLSurface extends View {
         }
         if(mouseCursorIndex == -1) return false; // we cant consoom that, theres no mice!
         if(CallbackBridge.isGrabbing()) {
-            if(BaseMainActivity.isAndroid8OrHigher() && !hasPointerCapture()){
+            if(MainActivity.isAndroid8OrHigher() && !hasPointerCapture()){
                 requestFocus();
                 requestPointerCapture();
             }
@@ -622,7 +628,6 @@ public class MinecraftGLSurface extends View {
         refreshSize();
 
         //Load Minecraft options:
-        MCOptionUtils.load();
         MCOptionUtils.set("fullscreen", "off");
         MCOptionUtils.set("overrideWidth", String.valueOf(windowWidth));
         MCOptionUtils.set("overrideHeight", String.valueOf(windowHeight));

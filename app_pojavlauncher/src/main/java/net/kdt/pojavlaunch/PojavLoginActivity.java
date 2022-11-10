@@ -325,17 +325,10 @@ public class PojavLoginActivity extends BaseActivity {
     }
     private void initMain() throws Throwable {
         mkdirs(Tools.DIR_ACCOUNT_NEW);
-        PojavMigrator.migrateAccountData(this);
         
         mkdirs(Tools.DIR_GAME_HOME);
         mkdirs(Tools.DIR_GAME_HOME + "/lwjgl3");
         mkdirs(Tools.DIR_GAME_HOME + "/config");
-        if (!PojavMigrator.migrateGameDir()) {
-            mkdirs(Tools.DIR_GAME_NEW);
-            mkdirs(Tools.DIR_GAME_NEW + "/mods");
-            mkdirs(Tools.DIR_HOME_VERSION);
-            mkdirs(Tools.DIR_HOME_LIBRARY);
-        }
 
         mkdirs(Tools.CTRLMAP_PATH);
 
@@ -772,7 +765,7 @@ public class PojavLoginActivity extends BaseActivity {
                     profileName = mProfile.save();
                 }
                 
-                PojavProfile.launch(PojavLoginActivity.this, profileName == null ? mProfile : profileName);
+                PojavProfile.launch(PojavLoginActivity.this, profileName);
             } catch (IOException e) {
                 Tools.showError(this, e);
             }

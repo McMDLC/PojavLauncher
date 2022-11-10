@@ -13,12 +13,15 @@ import java.net.URL;
 import com.google.gson.*;
 import android.graphics.Bitmap;
 import android.util.Base64;
+
+import androidx.annotation.Keep;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MinecraftAccount
-{
+@Keep
+public class MinecraftAccount {
     public String accessToken = "0"; // access token
     public String clientToken = "0"; // clientID: refresh and invalidate
     public String profileId = "00000000-0000-0000-0000-000000000000"; // profile UUID, for obtaining skin
@@ -48,6 +51,10 @@ public class MinecraftAccount
         }
     }
 
+    public boolean isLocal(){
+        return accessToken.equals("0");
+    }
+    
     public void updateSkinFace() {
         updateSkinFace(profileId);
     }
@@ -107,34 +114,5 @@ public class MinecraftAccount
 
     private static boolean accountExists(String username){
         return new File(Tools.DIR_ACCOUNT_NEW + "/" + username + ".json").exists();
-    }
-
-    public static void clearTempAccount() {
-        File tempAccFile = new File(Tools.DIR_DATA, "cache/tempacc.json");
-        tempAccFile.delete();
-    }
-
-    public static void saveTempAccount(MinecraftAccount acc) throws IOException {
-        File tempAccFile = new File(Tools.DIR_DATA, "cache/tempacc.json");
-        tempAccFile.delete();
-        acc.save(tempAccFile.getAbsolutePath());
-    }
-
-    public static class GetID extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... args) {
-            try {
-                URL url = new URL(args[0] + "/" + args[1]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.connect();
-                if (conn.getResponseCode() == 200) {
-                    return new JSONObject(Tools.read(conn.getInputStream())).getString("id");
-                }
-                return "00000000-0000-0000-0000-000000000000";
-            } catch (JSONException | IOException e) {
-                return "00000000-0000-0000-0000-000000000000";
-            }
-        }
-
     }
 }
