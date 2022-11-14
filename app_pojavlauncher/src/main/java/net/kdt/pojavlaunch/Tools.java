@@ -570,8 +570,9 @@ public final class Tools {
                         } else {
                             ((Activity) ctx).finish();
                         }
-                    })
-                    .setCancelable(!exitIfOk);
+                    }
+                })
+                .setCancelable(!exitIfOk);
             try {
                 builder.show();
             } catch (Throwable th) {
